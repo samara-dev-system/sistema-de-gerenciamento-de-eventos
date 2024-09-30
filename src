@@ -1,0 +1,85 @@
+-- 1. Criando o Banco de Dados
+CREATE DATABASE gerenciamento_de_eventos;
+USE gerenciamento_de_eventos;
+
+-- 2. Criando a Tabela 'eventos'
+CREATE TABLE eventos (
+    idevento INT AUTO_INCREMENT PRIMARY KEY,
+    nomeevento VARCHAR(100),
+    dataevento DATE,
+    localevento VARCHAR(100),
+    descricao TEXT
+);
+
+-- 3. Criando a Tabela 'participantes'
+CREATE TABLE participantes (
+    idparticipante INT AUTO_INCREMENT PRIMARY KEY,
+    nomeparticipante VARCHAR(100),
+    email VARCHAR(100),
+    telefone VARCHAR(15)
+);
+
+-- 4. Criando a Tabela 'inscricao'
+CREATE TABLE inscricao (
+    idinscricao INT AUTO_INCREMENT PRIMARY KEY,
+    idevento INT,
+    idparticipante INT,
+    datainscricao DATE,
+    FOREIGN KEY (idevento) REFERENCES eventos(idevento) ON DELETE CASCADE,
+    FOREIGN KEY (idparticipante) REFERENCES participantes(idparticipante) ON DELETE CASCADE
+);
+
+-- 5. Inserindo Dados Fictícios na Tabela 'eventos'
+INSERT INTO eventos (nomeevento, dataevento, localevento, descricao) 
+VALUES 
+('Conferência de Tecnologia', '2024-11-01', 'São Paulo', 'Evento anual de inovação tecnológica.'),
+('Workshop de Marketing Digital', '2024-12-10', 'Rio de Janeiro', 'Workshop sobre estratégias de marketing.'),
+('Seminário de Inteligência Artificial', '2024-10-15', 'Curitiba', 'Discussões sobre IA e suas aplicações.');
+
+-- 6. Inserindo Dados Fictícios na Tabela 'participantes'
+INSERT INTO participantes (nomeparticipante, email, telefone) 
+VALUES 
+('João Silva', 'joao.silva@gmail.com', '11999999999'),
+('Maria Oliveira', 'maria.oliveira@gmail.com', '21988888888'),
+('Carlos Souza', 'carlos.souza@gmail.com', '31977777777');
+
+-- 7. Inserindo Dados Fictícios na Tabela 'inscricao'
+INSERT INTO inscricao (idevento, idparticipante, datainscricao) 
+VALUES 
+(1, 1, '2024-09-30'),
+(1, 2, '2024-09-30'),
+(2, 3, '2024-09-30');
+
+-- 8. Consultas
+
+-- Consulta para buscar todos os eventos com participantes inscritos
+SELECT e.nomeevento, p.nomeparticipante, i.datainscricao
+FROM eventos e
+JOIN inscricao i ON e.idevento = i.idevento
+JOIN participantes p ON i.idparticipante = p.idparticipante;
+
+-- Consulta para listar todos os eventos em uma data específica
+SELECT * FROM eventos WHERE dataevento = '2024-11-01';
+
+-- Consulta para listar os participantes de um evento específico
+SELECT p.nomeparticipante, p.email, p.telefone
+FROM participantes p
+JOIN inscricao i ON p.idparticipante = i.idparticipante
+WHERE i.idevento = 1;
+
+-- 9. Atualizações
+
+-- Atualizando a data de um evento
+UPDATE eventos 
+SET dataevento = '2024-11-05' 
+WHERE idevento = 1;
+
+-- Atualizando o telefone de um participante
+UPDATE participantes 
+SET telefone = '11988887777' 
+WHERE idparticipante = 1;
+
+-- 10. Deletando um Evento e Suas Inscrições Associadas
+
+-- Deletando o evento de id 1 e todas as suas inscrições
+DELETE FROM eventos WHERE idevento = 1;
