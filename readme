@@ -1,0 +1,99 @@
+# Gerenciamento de Eventos
+
+Este projeto é um sistema de gerenciamento de eventos com três tabelas principais: **eventos**, **participantes** e **inscricao**. Ele permite gerenciar eventos, participantes e suas respectivas inscrições em um banco de dados MySQL.
+
+## Estrutura do Banco de Dados
+
+### Tabelas
+
+1. **eventos**: Armazena informações sobre os eventos.
+    - `idevento` (INT, PRIMARY KEY, AUTO_INCREMENT): Identificador único do evento.
+    - `nomeevento` (VARCHAR(100)): Nome do evento.
+    - `dataevento` (DATE): Data do evento.
+    - `localevento` (VARCHAR(100)): Local do evento.
+    - `descricao` (TEXT): Descrição do evento.
+
+2. **participantes**: Armazena informações sobre os participantes.
+    - `idparticipante` (INT, PRIMARY KEY, AUTO_INCREMENT): Identificador único do participante.
+    - `nomeparticipante` (VARCHAR(100)): Nome do participante.
+    - `email` (VARCHAR(100)): E-mail do participante.
+    - `telefone` (VARCHAR(15)): Telefone do participante.
+
+3. **inscricao**: Armazena informações sobre as inscrições de participantes nos eventos.
+    - `idinscricao` (INT, PRIMARY KEY, AUTO_INCREMENT): Identificador único da inscrição.
+    - `idevento` (INT, FOREIGN KEY): Referência ao evento inscrito.
+    - `idparticipante` (INT, FOREIGN KEY): Referência ao participante inscrito.
+    - `datainscricao` (DATE): Data da inscrição no evento.
+
+## Funcionalidades
+
+- **Inserção de eventos**: Cadastre novos eventos no sistema.
+- **Cadastro de participantes**: Cadastre participantes para os eventos.
+- **Inscrição de participantes**: Relacione participantes a eventos.
+- **Atualização de dados**: Atualize os dados dos eventos e participantes.
+- **Exclusão de eventos**: Exclua eventos e suas inscrições relacionadas.
+
+## Pré-requisitos
+
+- MySQL (ou MariaDB) instalado.
+- Cliente MySQL (ou ferramenta gráfica como MySQL Workbench).
+
+## Como Executar o Projeto
+
+1. Clone o repositório:
+
+    ```bash
+    git clone https://github.com/usuario/gerenciamento-de-eventos.git
+    ```
+
+2. Navegue até o diretório do projeto:
+
+    ```bash
+    cd gerenciamento-de-eventos
+    ```
+
+3. Conecte-se ao MySQL e execute o script SQL fornecido no arquivo `script.sql` para criar o banco de dados e as tabelas:
+
+    ```bash
+    mysql -u usuario -p < script.sql
+    ```
+
+4. Utilize as consultas e comandos SQL do arquivo `script.sql` para manipular o banco de dados.
+
+## Consultas e Operações
+
+### Exemplo de Inserção de Dados
+
+- Inserir um evento:
+
+    ```sql
+    INSERT INTO eventos (nomeevento, dataevento, localevento, descricao) 
+    VALUES ('Conferência de Tecnologia', '2024-11-01', 'São Paulo', 'Evento anual de inovação tecnológica.');
+    ```
+
+- Inserir um participante:
+
+    ```sql
+    INSERT INTO participantes (nomeparticipante, email, telefone) 
+    VALUES ('João Silva', 'joao.silva@gmail.com', '11999999999');
+    ```
+
+### Atualização de Dados
+
+- Atualizar a data de um evento:
+
+    ```sql
+    UPDATE eventos SET dataevento = '2024-11-05' WHERE idevento = 1;
+    ```
+
+### Exclusão de Dados
+
+- Excluir um evento e suas inscrições associadas:
+
+    ```sql
+    DELETE FROM eventos WHERE idevento = 1;
+    ```
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](./LICENSE).
