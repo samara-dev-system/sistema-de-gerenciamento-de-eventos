@@ -1,0 +1,17 @@
+# Logs
+*.log
+
+# Diretórios do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de banco de dados locais
+*.sql
+
+# Pastas e arquivos gerados por ambientes de desenvolvimento
+node_modules/
+vendor/
+
+# Credenciais e informações sensíveis
+.env
+*.env
